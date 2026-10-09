@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Management System | Academic Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===================================================================== -->
+  <!-- 1. AUTHENTICATION / LOGIN VIEW                                        -->
+  <!-- ===================================================================== -->
+  <div id="auth-container" class="auth-wrapper">
+    <div class="auth-grid">
+      
+      <!-- Left Hero Banner -->
+      <div class="auth-brand-panel">
+        <div class="brand-badge">
+          <span class="pulse-dot"></span> Academic Year 2026–27
+        </div>
+
+        <div class="brand-hero">
+          <div class="brand-logo-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <h1 class="brand-title">Faculty Hub</h1>
+          <p class="brand-subtitle">Smart Faculty Workload Management, Clash-Free Scheduling &amp; Instant AI Substitution Portal</p>
+        </div>
+
+        <div class="auth-highlights">
+          <div class="highlight-item">
+            <span class="hi-icon">🛡️</span>
+            <div>
+              <strong>Strict Clash Prevention</strong>
+              <p>Automated conflict detection prevents professor or lecture room double-booking.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="hi-icon">⚡</span>
+            <div>
+              <strong>Smart AI Substitution</strong>
+              <p>Automatically pairs affected classes with free same-department faculty based on workload.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="hi-icon">📊</span>
+            <div>
+              <strong>Workload Visual Heatmap</strong>
+              <p>Color-coded workload analytics to balance teaching loads across all departments.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-footer">
+          <span>Apex Institute of Technology &bull; University Academic Affairs</span>
+          <span class="sec-label">🔒 SSO Enforced</span>
+        </div>
+      </div>
+
+      <!-- Right Login Card -->
+      <div class="auth-form-panel">
+        <div class="auth-card">
+          <div class="auth-header">
+            <h2>Faculty Portal Sign In</h2>
+            <p>Access your institutional schedule, workload analytics, and teaching assignments.</p>
+          </div>
+
+          <!-- 1-Click Quick Demo Login Box -->
+          <div class="demo-login-box">
+            <div class="demo-box-head">
+              <span class="demo-spark">⚡</span>
+              <span><strong>Quick Demo Access</strong> (Click any role to log in instantly)</span>
+            </div>
+            <div class="demo-btn-grid">
+              <button type="button" class="btn-demo" id="demo-btn-admin" data-email="admin@college.edu" data-pass="AdminPass@123" data-role="admin">
+                <span class="demo-role-tag admin">HOD / Admin</span>
+                <span class="demo-user-name">Dr. Arvind Sharma</span>
+                <span class="demo-user-email">admin@college.edu</span>
+              </button>
+              <button type="button" class="btn-demo" id="demo-btn-senior" data-email="robert.cs@college.edu" data-pass="FacultyPass@123" data-role="faculty">
+                <span class="demo-role-tag senior">Senior Faculty</span>
+                <span class="demo-user-name">Prof. Robert Vance</span>
+                <span class="demo-user-email">robert.cs@college.edu</span>
+              </button>
+              <button type="button" class="btn-demo" id="demo-btn-junior" data-email="sarah.ece@college.edu" data-pass="FacultyPass@123" data-role="faculty">
+                <span class="demo-role-tag junior">Faculty</span>
+                <span class="demo-user-name">Dr. Sarah Jenkins</span>
+                <span class="demo-user-email">sarah.ece@college.edu</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-divider">
+            <span>OR SIGN IN WITH CREDENTIALS</span>
+          </div>
+
+          <!-- Manual Login Form -->
+          <form id="form-login" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="login-email">Institutional Email</label>
+              <div class="input-with-icon">
+                <span class="input-icon">✉️</span>
+                <input 
+                  type="email" 
+                  id="login-email" 
+                  class="form-input" 
+                  placeholder="username@college.edu or @reva.edu.in" 
+                  required 
+                  autocomplete="username">
+              </div>
+              <div id="login-email-error" class="field-msg error" style="display:none;"></div>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label class="form-label" for="login-password">Password</label>
+                <button type="button" class="link-btn" id="btn-forgot-password">Forgot Password?</button>
+              </div>
+              <div class="input-with-icon password-wrap">
+                <span class="input-icon">🔑</span>
+                <input 
+                  type="password" 
+                  id="login-password" 
+                  class="form-input" 
+                  placeholder="Enter your password" 
+                  required 
+                  autocomplete="current-password">
+                <button type="button" class="btn-pw-toggle" id="btn-toggle-password" title="Toggle password visibility" aria-label="Toggle password visibility">
+                  <span id="pw-toggle-text">👁️</span>
+                </button>
+              </div>
+              <div id="login-password-error" class="field-msg error" style="display:none;"></div>
+            </div>
+
+            <div class="form-extra-row">
+              <label class="checkbox-label">
+                <input type="checkbox" id="login-remember" checked>
+                <span>Remember this device</span>
+              </label>
+              <span class="secure-tag">256-bit SSL</span>
+            </div>
+
+            <div id="login-alert-banner" class="alert-banner danger" style="display:none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-login">
+              <span>Sign In to Faculty Hub</span>
+              <span class="btn-arrow">&rarr;</span>
+            </button>
+          </form>
+
+          <div class="auth-security-notice">
+            <span>Institutional Domain Enforced: <code>*@college.edu</code> &bull; <code>*@reva.edu.in</code> &bull; <code>*@*.edu</code></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 2. MAIN DASHBOARD CONTAINER (Protected Application View)              -->
+  <!-- ===================================================================== -->
+  <div id="app-container" class="app-wrapper hidden">
+    
+    <!-- Top Navigation Bar -->
+    <header class="navbar" role="banner">
+      <div class="navbar-left">
+        <div class="brand" id="nav-brand-logo">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Faculty Hub</span>
+            <span class="brand-sub">Academic Portal</span>
+          </div>
+        </div>
+
+        <!-- Tab Navigation Buttons -->
+        <nav class="nav-tabs" role="navigation" aria-label="Main Navigation">
+          <button type="button" class="nav-tab active" data-tab="dashboard" id="tab-dashboard">
+            <span class="tab-icon">📊</span>
+            <span>Dashboard</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="faculty" id="tab-faculty">
+            <span class="tab-icon">👨‍🏫</span>
+            <span>Faculty Directory</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="timetable" id="tab-timetable">
+            <span class="tab-icon">📅</span>
+            <span>Timetable Matrix</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="heatmap" id="tab-heatmap">
+            <span class="tab-icon">🔥</span>
+            <span>Workload Heatmap</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="substitution" id="tab-substitution">
+            <span class="tab-icon">🔄</span>
+            <span>Smart Substitution</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="navbar-right">
+        <!-- Reset Demo Data -->
+        <button type="button" class="btn btn-outline btn-sm admin-only" id="btn-reset-demo" title="Reset all data to default initial state">
+          <span>↺ Reset Demo</span>
+        </button>
+
+        <!-- User Context Pill & Logout -->
+        <div class="user-profile-menu">
+          <div class="user-badge" id="user-profile-pill">
+            <div class="user-avatar" id="nav-user-avatar">AS</div>
+            <div class="user-details">
+              <span class="user-name" id="nav-user-name">Dr. Arvind Sharma</span>
+              <span class="user-role-tag admin" id="nav-user-role">HOD &bull; CSE</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-logout" id="btn-logout" title="Sign out of your account">
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Role Context Banner for Regular Faculty -->
+    <div id="role-notice-banner" class="role-banner hidden">
+      <div class="role-banner-content">
+        <span>ℹ️ <strong>Faculty Access Mode:</strong> You are viewing department schedules in standard faculty mode. Schedule assignments and faculty additions require HOD administrator privileges.</span>
+      </div>
+    </div>
+
+    <!-- Main Content Body -->
+    <main class="main-content" id="main-content">
+
+      <!-- ================================================================= -->
+      <!-- VIEW 1: DASHBOARD                                                 -->
+      <!-- ================================================================= -->
+      <section class="view-panel active" id="view-dashboard">
+        <div class="view-header">
+          <div>
+            <h2 class="view-title">Academic Overview &amp; Key Metrics</h2>
+            <p class="view-subtitle">Live summary of faculty strength, scheduled lecture hours, and active workload distribution.</p>
+          </div>
+          <div class="view-actions">
+            <button type="button" class="btn btn-primary admin-only" id="btn-dash-add-faculty">+ Add Faculty</button>
+            <button type="button" class="btn btn-secondary admin-only" id="btn-dash-add-schedule">+ Assign Slot</button>
+          </div>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="stats-row" id="dash-stats-grid"></div>
+
+        <!-- Live Insight Banner -->
+        <div id="dash-insight-bar" class="insight-bar"></div>
+
+        <!-- Dashboard Quick-Access Navigation Cards -->
+        <div class="grid-2-col" style="margin-bottom: 24px;">
+          <div class="card" id="card-goto-faculty" style="cursor: pointer; transition: transform var(--transition), border-color var(--transition);">
+            <div class="card-body" style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="stat-icon-wrap primary" style="font-size: 1.4rem;">👨‍🏫</div>
+                <div>
+                  <h3 style="font-size: 1.05rem; margin-bottom: 2px;">Faculty Directory</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary);">Browse staff profiles, contact emails, and manage teaching load</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" id="btn-goto-faculty">
+                <span>Go to Faculty &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card" id="card-goto-timetable" style="cursor: pointer; transition: transform var(--transition), border-color var(--transition);">
+            <div class="card-body" style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="stat-icon-wrap success" style="font-size: 1.4rem;">📅</div>
+                <div>
+                  <h3 style="font-size: 1.05rem; margin-bottom: 2px;">Timetable Matrix</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary);">View master weekly lecture schedule and room allocations</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" id="btn-goto-timetable">
+                <span>View Timetable &rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Department Quick-Access Links -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
+            🏢 Departments Quick Directory
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+            <div class="card dept-quick-card" data-dept="CSE" style="cursor: pointer; transition: all var(--transition);">
+              <div class="card-body" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font-size: 1.5rem;">💻</span>
+                  <div>
+                    <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Computer Science (CSE)</h4>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">5 Faculty Members</span>
+                  </div>
+                </div>
+                <span class="btn btn-outline btn-sm" style="pointer-events: none;">View &rarr;</span>
+              </div>
+            </div>
+
+            <div class="card dept-quick-card" data-dept="ECE" style="cursor: pointer; transition: all var(--transition);">
+              <div class="card-body" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font-size: 1.5rem;">📡</span>
+                  <div>
+                    <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Electronics (ECE)</h4>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">3 Faculty Members</span>
+                  </div>
+                </div>
+                <span class="btn btn-outline btn-sm" style="pointer-events: none;">View &rarr;</span>
+              </div>
+            </div>
+
+            <div class="card dept-quick-card" data-dept="Mathematics" style="cursor: pointer; transition: all var(--transition);">
+              <div class="card-body" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font-size: 1.5rem;">📐</span>
+                  <div>
+                    <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Mathematics</h4>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">2 Faculty Members</span>
+                  </div>
+                </div>
+                <span class="btn btn-outline btn-sm" style="pointer-events: none;">View &rarr;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Grids -->
+        <div class="grid-2-col">
+          <!-- Department Workload Snapshot -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Department Workload Snapshot</h3>
+              <button type="button" class="link-btn" id="btn-goto-heatmap">View Full Heatmap &rarr;</button>
+            </div>
+            <div class="card-body no-padding">
+              <div class="table-responsive">
+                <table class="data-table" id="dash-dept-table">
+                  <thead>
+                    <tr>
+                      <th>Department</th>
+                      <th>Faculty Count</th>
+                      <th>Total Weekly Hours</th>
+                      <th>Avg Load</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-dept-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Substitutions & Alerts Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Active Substitutions &amp; Absences</h3>
+              <button type="button" class="link-btn" id="btn-goto-substitution">Manage Substitutions &rarr;</button>
+            </div>
+            <div class="card-body">
+              <div id="dash-substitutions-list" class="sub-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 2: FACULTY DIRECTORY                                         -->
+      <!-- ================================================================= -->
+      <section class="view-panel hidden" id="view-faculty">
+        <div class="view-header">
+          <div>
+            <h2 class="view-title">Faculty Directory</h2>
+            <p class="view-subtitle">Manage department teaching staff, weekly hour caps, and contact profiles.</p>
+          </div>
+          <button type="button" class="btn btn-primary admin-only" id="btn-open-add-faculty-modal">+ Add New Faculty</button>
+        </div>
+
+        <!-- Filters Toolbar -->
+        <div class="view-toolbar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="search" class="form-input" id="faculty-search-input" placeholder="Search by name, email, department, or designation...">
+          </div>
+          <div class="filter-group">
+            <select class="form-select" id="faculty-dept-select">
+              <option value="ALL">All Departments</option>
+              <option value="CSE">Computer Science (CSE)</option>
+              <option value="ECE">Electronics (ECE)</option>
+              <option value="Mathematics">Mathematics</option>
+            </select>
+            <select class="form-select" id="faculty-status-select">
+              <option value="ALL">All Workload Statuses</option>
+              <option value="Balanced">Balanced (10–Cap)</option>
+              <option value="Underloaded">Underloaded (&lt;10 hrs)</option>
+              <option value="Overloaded">Overloaded (&ge;Cap)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Faculty Grid -->
+        <div class="faculty-grid" id="faculty-cards-container"></div>
+        
+        <div class="empty-state hidden" id="faculty-empty-state">
+          <div class="empty-icon">👥</div>
+          <h3>No Faculty Members Found</h3>
+          <p>No faculty records match your active search or filter selection.</p>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 3: TIMETABLE MATRIX                                          -->
+      <!-- ================================================================= -->
+      <section class="view-panel hidden" id="view-timetable">
+        <div class="view-header">
+          <div>
+            <h2 class="view-title">Academic Timetable Matrix</h2>
+            <p class="view-subtitle">Weekly master timetable with clash resolution. Click any empty slot to schedule classes.</p>
+          </div>
+          <button type="button" class="btn btn-primary admin-only" id="btn-open-add-schedule-modal">+ Assign Schedule Slot</button>
+        </div>
+
+        <!-- Timetable Toolbar -->
+        <div class="view-toolbar">
+          <div class="filter-group">
+            <div class="select-wrapper">
+              <label class="form-label" for="timetable-faculty-select">Filter Faculty:</label>
+              <select class="form-select" id="timetable-faculty-select">
+                <option value="ALL">🏢 All Faculty (Aggregated Master Matrix)</option>
+              </select>
+            </div>
+            <div class="select-wrapper">
+              <label class="form-label" for="timetable-room-select">Filter Room:</label>
+              <select class="form-select" id="timetable-room-select">
+                <option value="ALL">All Lecture Halls / Labs</option>
+                <option value="Room 101">Room 101 (CSE)</option>
+                <option value="Room 102">Room 102 (CSE)</option>
+                <option value="Room 204">Room 204 (CSE)</option>
+                <option value="Lab 1">Lab 1 (Systems)</option>
+                <option value="Lab 2">Lab 2 (AI/ML)</option>
+                <option value="Room 301">Room 301 (Math)</option>
+                <option value="Room 302">Room 302 (Math)</option>
+                <option value="Room 303">Room 303 (Math)</option>
+                <option value="Room 401">Room 401 (ECE)</option>
+                <option value="Room 402">Room 402 (ECE)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Master Timetable Grid -->
+        <div class="card">
+          <div class="tt-header-notice">
+            <span>📅 Monday to Friday &bull; 8 Time Slots &bull; <strong>1:00 PM – 2:00 PM is reserved for Lunch Break</strong></span>
+          </div>
+          <div class="tt-grid-wrapper" id="timetable-matrix-container"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 4: WORKLOAD HEATMAP                                          -->
+      <!-- ================================================================= -->
+      <section class="view-panel hidden" id="view-heatmap">
+        <div class="view-header">
+          <div>
+            <h2 class="view-title">Weekly Faculty Workload Heatmap</h2>
+            <p class="view-subtitle">Visual load distribution matrix showing hours per day, total weekly workload, and capacity thresholds.</p>
+          </div>
+          <div class="filter-group">
+            <select class="form-select select-sm" id="heatmap-dept-select">
+              <option value="ALL">All Departments</option>
+              <option value="CSE">Computer Science (CSE)</option>
+              <option value="ECE">Electronics (ECE)</option>
+              <option value="Mathematics">Mathematics</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Heatmap Legend & Table Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="heatmap-legend">
+              <div class="legend-item"><span class="legend-swatch light"></span> <strong>Underloaded:</strong> &lt; 10 hrs / week</div>
+              <div class="legend-item"><span class="legend-swatch balanced"></span> <strong>Balanced:</strong> 10 hrs to Max Cap</div>
+              <div class="legend-item"><span class="legend-swatch overloaded"></span> <strong>Overloaded:</strong> &ge; Max Cap</div>
+            </div>
+          </div>
+          <div class="card-body no-padding">
+            <div class="table-responsive">
+              <table class="data-table heatmap-table" id="heatmap-table">
+                <thead>
+                  <tr>
+                    <th class="hm-col-name">Faculty Member</th>
+                    <th class="hm-col-dept">Dept</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th class="hm-col-total">Total Load</th>
+                    <th class="hm-col-cap">Max Cap</th>
+                    <th class="hm-col-status">Workload Status</th>
+                  </tr>
+                </thead>
+                <tbody id="heatmap-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 5: SMART SUBSTITUTION                                        -->
+      <!-- ================================================================= -->
+      <section class="view-panel hidden" id="view-substitution">
+        <div class="view-header">
+          <div>
+            <h2 class="view-title">Smart Faculty Substitution Finder</h2>
+            <p class="view-subtitle">Report faculty leaves and let the AI substitution engine find suitable same-department substitutes.</p>
+          </div>
+        </div>
+
+        <div class="grid-2-col">
+          <!-- Absence Form Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🚨 Report Faculty Absence</h3>
+            </div>
+            <div class="card-body">
+              <form id="form-mark-absence" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="sub-faculty-select">Faculty Member</label>
+                    <select class="form-select" id="sub-faculty-select" required></select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="sub-date-input">Absence Date</label>
+                    <input type="date" class="form-input" id="sub-date-input" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="sub-scope-select">Absence Scope</label>
+                  <select class="form-select" id="sub-scope-select">
+                    <option value="whole">Full Day (All scheduled lectures on this date)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="sub-reason-input">Reason (Optional)</label>
+                  <input type="text" class="form-input" id="sub-reason-input" placeholder="e.g. Medical leave, Academic Conference, External Exam Duty">
+                </div>
+
+                <button type="submit" class="btn btn-danger btn-block" id="btn-submit-absence">
+                  <span>Mark Absent &amp; Find Substitutes</span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Matching Rules Engine Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">⚡ Substitution Engine Matching Logic</h3>
+            </div>
+            <div class="card-body">
+              <div class="engine-step">
+                <div class="step-badge">1</div>
+                <div>
+                  <strong>Same Department Matching:</strong> Only faculty with matching subject domain expertise are suggested.
+                </div>
+              </div>
+              <div class="engine-step">
+                <div class="step-badge">2</div>
+                <div>
+                  <strong>Clash &amp; Absence Verification:</strong> Candidates must have zero clashes and must not be marked absent on that date.
+                </div>
+              </div>
+              <div class="engine-step">
+                <div class="step-badge">3</div>
+                <div>
+                  <strong>Workload Optimization:</strong> Prioritizes faculty who are currently underloaded to prevent staff burnout.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Affected Classes & Candidate List -->
+        <div class="card mt-24">
+          <div class="card-header">
+            <h3 class="card-title">📋 Affected Scheduled Lectures &amp; Suggested Substitutes</h3>
+            <span class="badge info" id="affected-classes-badge">0 Lectures</span>
+          </div>
+          <div class="card-body">
+            <div id="affected-classes-container" class="sub-list">
+              <div class="empty-state small">
+                <p>Select a faculty member and date above to compute affected classes and find smart substitutes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Confirmed Substitutions -->
+        <div class="card mt-24">
+          <div class="card-header">
+            <h3 class="card-title">✅ Confirmed Substitutions Log</h3>
+            <span class="badge success" id="active-subs-badge">0 Reassignments</span>
+          </div>
+          <div class="card-body">
+            <div id="active-subs-container" class="sub-list">
+              <div class="empty-state small">
+                <p>No active substitutions recorded yet.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 3. MODAL DIALOGS                                                      -->
+  <!-- ===================================================================== -->
+
+  <!-- Backdrop -->
+  <div class="modal-overlay hidden" id="modal-backdrop">
+    
+    <!-- Modal: Add / Edit Faculty -->
+    <div class="modal-card hidden" id="modal-faculty">
+      <div class="modal-header">
+        <h3 id="modal-faculty-title">Add Faculty Member</h3>
+        <button type="button" class="btn-modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-faculty">
+        <input type="hidden" id="modal-faculty-id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="modal-faculty-name">Full Name with Title</label>
+            <input type="text" class="form-input" id="modal-faculty-name" placeholder="e.g. Dr. Rajesh Kumar" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="modal-faculty-dept">Department</label>
+              <select class="form-select" id="modal-faculty-dept" required>
+                <option value="CSE">Computer Science (CSE)</option>
+                <option value="ECE">Electronics (ECE)</option>
+                <option value="Mathematics">Mathematics</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="modal-faculty-desig">Designation</label>
+              <select class="form-select" id="modal-faculty-desig" required>
+                <option value="Professor & HOD">Professor &amp; HOD</option>
+                <option value="Professor">Professor</option>
+                <option value="Associate Professor">Associate Professor</option>
+                <option value="Assistant Professor">Assistant Professor</option>
+                <option value="Lecturer">Lecturer</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="modal-faculty-email">Institutional Email</label>
+              <input type="email" class="form-input" id="modal-faculty-email" placeholder="name@college.edu" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="modal-faculty-maxhours">Max Weekly Hours</label>
+              <input type="number" class="form-input" id="modal-faculty-maxhours" min="6" max="24" value="16" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-faculty">Save Faculty</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Add / Edit Schedule Entry (With Clash Prevention) -->
+    <div class="modal-card hidden" id="modal-schedule">
+      <div class="modal-header">
+        <h3 id="modal-schedule-title">Assign Schedule Slot</h3>
+        <button type="button" class="btn-modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-schedule">
+        <input type="hidden" id="modal-schedule-id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="modal-schedule-faculty">Faculty Member</label>
+            <select class="form-select" id="modal-schedule-faculty" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modal-schedule-subject">Course / Subject</label>
+            <select class="form-select" id="modal-schedule-subject" required></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="modal-schedule-day">Day of Week</label>
+              <select class="form-select" id="modal-schedule-day" required>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="modal-schedule-slot">Time Slot</label>
+              <select class="form-select" id="modal-schedule-slot" required>
+                <option value="1">Slot 1 (9:00 – 10:00 AM)</option>
+                <option value="2">Slot 2 (10:00 – 11:00 AM)</option>
+                <option value="3">Slot 3 (11:00 – 12:00 PM)</option>
+                <option value="4">Slot 4 (12:00 – 1:00 PM)</option>
+                <option value="5" disabled style="color:var(--text-muted)">Slot 5 (1:00 – 2:00 PM - Lunch Break)</option>
+                <option value="6">Slot 6 (2:00 – 3:00 PM)</option>
+                <option value="7">Slot 7 (3:00 – 4:00 PM)</option>
+                <option value="8">Slot 8 (4:00 – 5:00 PM)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modal-schedule-room">Lecture Hall / Room</label>
+            <input type="text" class="form-input" id="modal-schedule-room" placeholder="e.g. Room 101, Lab 2" required>
+          </div>
+
+          <!-- Live Inline Conflict Alert -->
+          <div id="modal-schedule-conflict-box" class="alert-banner danger hidden"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger hidden" id="btn-delete-schedule" style="margin-right:auto">Delete Entry</button>
+          <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-schedule">Confirm Assignment</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Generic Alert / Conflict Popup -->
+    <div class="modal-card hidden" id="modal-alert">
+      <div class="modal-header">
+        <h3 id="modal-alert-title">Conflict Detected</h3>
+        <button type="button" class="btn-modal-close" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-alert-content" style="font-size:0.92rem;line-height:1.5;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-close-modal id="btn-alert-ok">Understood</button>
+      </div>
+    </div>
+
+    <!-- Modal: Forgot Password Simulation -->
+    <div class="modal-card hidden" id="modal-forgot-pw">
+      <div class="modal-header">
+        <h3>Institutional Password Reset</h3>
+        <button type="button" class="btn-modal-close" data-close-modal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:12px">Enter your institutional email address to receive password recovery instructions:</p>
+        <div class="form-group">
+          <input type="email" class="form-input" id="fp-email-input" placeholder="username@college.edu">
+        </div>
+        <div id="fp-feedback-box" class="alert-banner success hidden"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-close-modal>Close</button>
+        <button type="button" class="btn btn-primary" id="btn-send-pw-reset">Send Recovery Email</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Core JavaScript Application -->
+  <script src="app.js"></script>
+</body>
+</html>
